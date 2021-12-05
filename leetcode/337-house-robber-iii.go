@@ -7,10 +7,8 @@
  * }
  */
 
-var cache = map[*TreeNode]int{}
-
 func rob(root *TreeNode) int {
-    return max(sum(root, false), sum(root, true))
+    return max(sum(root))
 }
 
 func max(lhs int, rhs int) int {
@@ -21,23 +19,15 @@ func max(lhs int, rhs int) int {
     return lhs
 }
 
-func sum(root *TreeNode, robbed bool) int {
+func sum(root *TreeNode) (int, int) {
     if root == nil {
-        return 0
+        return 0, 0
     }
 
-    if robbed {
-        return root.Val + sum(root.Left, false) + sum(root.Right, false)
-    }
+    lrobbed, lsafe := sum(root.Left)
+    rrobbed, rsafe := sum(root.Right)
+    robbed := root.Val + lsafe + rsafe
+    safe := max(lrobbed, lsafe) + max(rrobbed, rsafe)
 
-    if val, ok := cache[root]; ok {
-        return val
-    }
-
-    max := max(sum(root.Left, true), sum(root.Left, false)) +
-        max(sum(root.Right, true), sum(root.Right, false))
-
-    cache[root] = max
-
-    return max
+    return robbed, safe
 }
