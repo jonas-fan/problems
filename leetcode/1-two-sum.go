@@ -1,13 +1,13 @@
 func twoSum(nums []int, target int) []int {
-    mapping := map[int]int{}
+    indices := make(map[int]int)
 
-    for index, each := range nums {
-        if val, ok := mapping[target-each]; ok {
-            return []int{index, val}
+    for lhs, num := range nums {
+        if rhs, ok := indices[target-num]; ok {
+            return []int{lhs, rhs}
         }
 
-        mapping[each] = index
+        indices[num] = lhs
     }
 
-    return []int{0, 0}
+    return []int{}
 }
