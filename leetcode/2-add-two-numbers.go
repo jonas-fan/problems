@@ -6,38 +6,38 @@
  * }
  */
 
-func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-    var head *ListNode
-    var node **ListNode = &head
-    var carry int
-
-    for l1 != nil || l2 != nil || carry > 0 {
-        sum := listValue(l1) + listValue(l2) + carry
-
-        carry = sum / 10
-        *node = &ListNode{
-            Val: sum % 10,
-        }
-
-        node = &(*node).Next
-        l1 = listNext(l1)
-        l2 = listNext(l2)
+func next(node *ListNode) *ListNode {
+    if node == nil {
+        return nil
     }
 
-    return head
+    return node.Next
 }
 
-func listValue(head *ListNode) int {
-    if head == nil {
+func eval(node *ListNode) int {
+    if node == nil {
         return 0
     }
 
-    return head.Val
+    return node.Val
 }
 
-func listNext(head *ListNode) *ListNode {
-    if head == nil {
-        return nil
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+    node := &ListNode{}
+    head := node
+    digit := 0
+
+    for l1 != nil || l2 != nil || digit != 0 {
+        digit += eval(l1) + eval(l2)
+
+        node.Next = &ListNode{
+            Val:  digit % 10,
+        }
+
+        node = node.Next
+        digit /= 10
+        l1 = next(l1)
+        l2 = next(l2)
     }
 
     return head.Next
