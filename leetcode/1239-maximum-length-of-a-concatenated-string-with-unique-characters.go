@@ -33,9 +33,7 @@ func dfs(tokens []string, signatures []int, length int, signature int) int {
 
         result := 0
 
-        if signature & signatures[i] > 0 {
-            result = dfs(tokens[i+1:], signatures[i+1:], len(tokens[i]), signatures[i])
-        } else {
+        if signature & signatures[i] == 0 {
             result = dfs(tokens[i+1:], signatures[i+1:], len(tokens[i]) + length, signatures[i] | signature)
         }
 
