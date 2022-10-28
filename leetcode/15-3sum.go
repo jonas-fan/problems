@@ -17,12 +17,21 @@ func threeSum(nums []int) [][]int {
         bucket[num]++
     }
 
+    keys := make([]int, 0, len(bucket))
+
+    for num := range bucket {
+        keys = append(keys, num)
+    }
+
     seen := map[[3]int]bool{}
 
-    for x := range bucket {
+    for i := 0; i < len(keys); i++ {
+        x := keys[i]
+
         bucket[x]--
 
-        for y := range bucket {
+        for j := i; j < len(keys); j++ {
+            y := keys[j]
             z := 0 - x - y
 
             if _, ok := bucket[z]; !ok {
