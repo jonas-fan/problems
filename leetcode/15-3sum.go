@@ -2,45 +2,51 @@ import (
     "sort"
 )
 
+func makeTriplet(x int, y int, z int) [3]int {
+    out := [3]int{x, y, z}
+
+    sort.Ints(out[:])
+
+    return out
+}
+
 func threeSum(nums []int) [][]int {
-    out := [][]int{}
-    seen := map[[2]int]bool{}
+    bucket := map[int]int{}
 
-    sort.Ints(nums)
+    for _, num := range nums {
+        bucket[num]++
+    }
 
-    for i := 0; i < len(nums) - 2; i++ {
-        for j := i + 1; j < len(nums) - 1; j++ {
-            key := [2]int{nums[i], nums[j]}
+    seen := map[[3]int]bool{}
 
-            if _, ok := seen[key]; ok {
+    for num1 := range bucket {
+        bucket[num1]--
+
+        for num2 := range bucket {
+            target := 0 - num1 - num2
+
+            if _, ok := bucket[target]; !ok {
+                continue
+            } else if bucket[num2] < 1 {
+                continue
+            } else if bucket[target] < 1 {
+                continue
+            } else if num2 == target && bucket[num2] < 2 {
                 continue
             }
 
-            for k := j + 1; k < len(nums); k++ {
-                if nums[i] + nums[j] + nums[k] == 0 {
-                    triplet := []int{nums[i], nums[j], nums[k]}
-
-                    keys := [3][2]int{
-                        [2]int{triplet[0], triplet[1]},
-                        [2]int{triplet[0], triplet[2]},
-                        [2]int{triplet[1], triplet[2]},
-                    }
-
-                    if _, ok := seen[keys[0]]; ok {
-                        continue
-                    } else if _, ok := seen[keys[1]]; ok {
-                        continue
-                    } else if _, ok := seen[keys[2]]; ok {
-                        continue
-                    }
-
-                    seen[keys[0]] = true
-                    seen[keys[1]] = true
-                    seen[keys[2]] = true
-                    out = append(out, triplet)
-                }
-            }
+            seen[makeTriplet(num1, num2, target)] = true
         }
+
+        bucket[num1]++
+    }
+
+    out := make([][]int, 0, len(seen))
+
+    for triplet := range seen {
+        triplet := []int{triplet[0], triplet[1], triplet[2]}
+
+        out = append(out, triplet)
     }
 
     return out
