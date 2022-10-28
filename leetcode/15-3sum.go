@@ -19,26 +19,26 @@ func threeSum(nums []int) [][]int {
 
     seen := map[[3]int]bool{}
 
-    for num1 := range bucket {
-        bucket[num1]--
+    for x := range bucket {
+        bucket[x]--
 
-        for num2 := range bucket {
-            target := 0 - num1 - num2
+        for y := range bucket {
+            z := 0 - x - y
 
-            if _, ok := bucket[target]; !ok {
+            if _, ok := bucket[z]; !ok {
                 continue
-            } else if bucket[num2] < 1 {
+            } else if bucket[y] < 1 {
                 continue
-            } else if bucket[target] < 1 {
+            } else if bucket[z] < 1 {
                 continue
-            } else if num2 == target && bucket[num2] < 2 {
+            } else if y == z && bucket[y] < 2 {
                 continue
             }
 
-            seen[makeTriplet(num1, num2, target)] = true
+            seen[makeTriplet(x, y, z)] = true
         }
 
-        bucket[num1]++
+        bucket[x]++
     }
 
     out := make([][]int, 0, len(seen))
