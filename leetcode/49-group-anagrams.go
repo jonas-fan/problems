@@ -13,18 +13,18 @@ func sortString(str string) string {
 }
 
 func groupAnagrams(strs []string) [][]string {
-    out := [][]string{}
-    signatures := map[string]int{}
+    buckets := map[string][]string{}
 
     for _, str := range strs {
-        signature := sortString(str)
+        sorted := sortString(str)
 
-        if pos, ok := signatures[signature]; ok {
-            out[pos] = append(out[pos], str)
-        } else {
-            signatures[signature] = len(out)
-            out = append(out, []string{str})
-        }
+        buckets[sorted] = append(buckets[sorted], str)
+    }
+
+    out := make([][]string, 0, len(buckets))
+
+    for _, bucket := range buckets {
+        out = append(out, bucket)
     }
 
     return out
