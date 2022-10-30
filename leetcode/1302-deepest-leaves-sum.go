@@ -15,19 +15,17 @@ func max(lhs int, rhs int) int {
     return lhs
 }
 
-func walk(node *TreeNode, level int) (int, int) {
+func walk(node *TreeNode) (int, int) {
     if node == nil {
-        return level, 0
+        return 0, 0
     }
 
-    depth := level + 1
-    
     if node.Left == nil && node.Right == nil {
-        return depth, node.Val
+        return 1, node.Val
     }
 
-    ldepth, lsum := walk(node.Left, depth)
-    rdepth, rsum := walk(node.Right, depth)
+    ldepth, lsum := walk(node.Left)
+    rdepth, rsum := walk(node.Right)
     sum := 0
 
     if ldepth < rdepth {
@@ -38,11 +36,11 @@ func walk(node *TreeNode, level int) (int, int) {
         sum += lsum + rsum
     }
 
-    return max(ldepth, rdepth), sum
+    return 1+max(ldepth, rdepth), sum
 }
 
 func deepestLeavesSum(root *TreeNode) int {
-    _, sum := walk(root, 0)
+    _, sum := walk(root)
 
     return sum
 }
