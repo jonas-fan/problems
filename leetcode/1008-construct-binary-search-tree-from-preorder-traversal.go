@@ -1,3 +1,5 @@
+// #tree #binary-tree #order
+
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -7,46 +9,29 @@
  * }
  */
 
-// #tree #binary-tree #order
-
-import (
-    "sort"
-)
-
-func clone(nums []int) []int {
-    out := make([]int, len(nums))
-
-    copy(out, nums)
-
-    return out
-}
-
-func makeTree(inorder []int, preorder []int) *TreeNode {
-    if len(inorder) == 0 {
+func makeTree(preorder []int) *TreeNode {
+    if len(preorder) == 0 {
         return nil
+    } else if len(preorder) == 1 {
+        return &TreeNode{Val: preorder[0]}        
     }
 
-    value := preorder[0]
+    value, preorder := preorder[0], preorder[1:]
     bound := 0
 
-    for i := 0; i < len(inorder); i++ {
-        if inorder[i] == value {
-            bound = i
+    for ; bound < len(preorder); bound++ {
+        if preorder[bound] > value {
             break
         }
     }
 
     return &TreeNode{
         Val:   value,
-        Left:  makeTree(inorder[:bound], preorder[1:1+bound]),
-        Right: makeTree(inorder[bound+1:], preorder[1+bound:]),
+        Left:  makeTree(preorder[:bound]),
+        Right: makeTree(preorder[bound:]),
     }
 }
 
 func bstFromPreorder(preorder []int) *TreeNode {
-    inorder := clone(preorder)
-
-    sort.Ints(inorder)
-
-    return makeTree(inorder, preorder)
+    return makeTree(preorder)
 }
