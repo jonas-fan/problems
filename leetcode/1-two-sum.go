@@ -1,12 +1,16 @@
-func twoSum(nums []int, target int) []int {
-    indices := make(map[int]int)
+// #array #hashmap
 
-    for lhs, num := range nums {
-        if rhs, ok := indices[target-num]; ok {
-            return []int{lhs, rhs}
+func twoSum(nums []int, target int) []int {
+    seen := map[int]int{}
+
+    for i, num := range nums {
+        rest := target - num
+
+        if where, have := seen[rest]; have {
+            return []int{i, where}
         }
 
-        indices[num] = lhs
+        seen[num] = i
     }
 
     return []int{}
