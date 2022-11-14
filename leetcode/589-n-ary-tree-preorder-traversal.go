@@ -1,3 +1,5 @@
+// #tree #depth-first-search #stack
+
 /**
  * Definition for a Node.
  * type Node struct {
