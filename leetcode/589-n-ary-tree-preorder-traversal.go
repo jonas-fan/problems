@@ -23,3 +23,26 @@ func walk(node *Node, out []int) []int {
 func preorder(root *Node) []int {
     return walk(root, []int{})
 }
+
+/*
+func preorder(root *Node) []int {
+    out := []int{}
+    stack := []*Node{root}
+
+    for len(stack) > 0 {
+        top := len(stack) - 1
+        node := stack[top]
+        stack = stack[:top]
+
+        if node != nil {
+            out = append(out, node.Val)
+
+            for i := len(node.Children) - 1; i >= 0; i-- {
+                stack = append(stack, node.Children[i])
+            }
+        }
+    }
+
+    return out
+}
+*/
