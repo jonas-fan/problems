@@ -9,22 +9,8 @@
  */
 
 func firstBadVersion(n int) int {
-    left := n
+    left := 1
     right := n
-
-    if isBadVersion(n) {
-        for isBadVersion(n) {
-            right = n
-            n = n >> 1
-            left = n
-        }
-    } else {
-        for !isBadVersion(n) {
-            left = n
-            n = n << 1
-            right = n
-        }
-    }
 
     for left < right {
         mid := (left + right) >> 1
