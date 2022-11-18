@@ -1,3 +1,5 @@
+// #tree #binary-tree #depth-first-search
+
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -7,18 +9,24 @@
  * }
  */
 
-func dfs(root *TreeNode, out []int) []int {
-    if root == nil {
-        return out
+func inorderTraversal(root *TreeNode) []int {
+    out := []int{}
+    stack := []*TreeNode{}
+
+    for root != nil || len(stack) > 0 {
+        if root != nil {
+            stack = append(stack, root)
+            root = root.Left
+        } else {
+            node := stack[len(stack)-1]
+            stack = stack[:len(stack)-1]
+            out = append(out, node.Val)
+
+            if node.Right != nil {
+                root = node.Right
+            }
+        }
     }
 
-    out = dfs(root.Left, out)
-    out = append(out, root.Val)
-    out = dfs(root.Right, out)
-
     return out
-}
-
-func inorderTraversal(root *TreeNode) []int {
-    return dfs(root, []int{})
 }
