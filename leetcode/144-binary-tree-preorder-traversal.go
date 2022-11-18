@@ -1,4 +1,4 @@
-// #tree #binary-tree #depth-search-first
+// #tree #binary-tree #depth-first-search
 
 /**
  * Definition for a binary tree node.
