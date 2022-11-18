@@ -1,3 +1,5 @@
+// #tree #binary-tree
+
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -7,7 +9,7 @@
  * }
  */
 
-func eval(node *TreeNode) int {
+func value(node *TreeNode) int {
     if node == nil {
         return 0
     }
@@ -15,7 +17,7 @@ func eval(node *TreeNode) int {
     return node.Val
 }
 
-func lchild(node *TreeNode) *TreeNode {
+func childLeft(node *TreeNode) *TreeNode {
     if node == nil {
         return nil
     }
@@ -23,7 +25,7 @@ func lchild(node *TreeNode) *TreeNode {
     return node.Left
 }
 
-func rchild(node *TreeNode) *TreeNode {
+func childRight(node *TreeNode) *TreeNode {
     if node == nil {
         return nil
     }
@@ -37,8 +39,8 @@ func mergeTrees(root1 *TreeNode, root2 *TreeNode) *TreeNode {
     }
 
     return &TreeNode{
-        Val:   eval(root1) + eval(root2),
-        Left:  mergeTrees(lchild(root1), lchild(root2)),
-        Right: mergeTrees(rchild(root1), rchild(root2)),
+        Val:   value(root1) + value(root2),
+        Left:  mergeTrees(childLeft(root1), childLeft(root2)),
+        Right: mergeTrees(childRight(root1), childRight(root2)),
     }
 }
