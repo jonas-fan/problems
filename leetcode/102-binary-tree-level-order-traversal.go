@@ -1,4 +1,4 @@
-// #tree #breadth-first-search #queue
+// #tree #binary-tree #breadth-first-search
 
 /**
  * Definition for a binary tree node.
@@ -10,6 +10,10 @@
  */
 
 func levelOrder(root *TreeNode) [][]int {
+    if root == nil {
+        return [][]int{}
+    }
+
     out := [][]int{}
     queue := []*TreeNode{root}
 
@@ -18,21 +22,20 @@ func levelOrder(root *TreeNode) [][]int {
         nodes := []*TreeNode{}
 
         for _, node := range queue {
-            if node == nil {
-                continue
+            values = append(values, node.Val)
+
+            if node.Left != nil {
+                nodes = append(nodes, node.Left)
             }
 
-            values = append(values, node.Val)
-            nodes = append(nodes, node.Left)
-            nodes = append(nodes, node.Right)
+            if node.Right != nil {
+                nodes = append(nodes, node.Right)
+            }
         }
 
-        if len(values) > 0 {
-            out = append(out, values)
-        }
-
+        out = append(out, values)
         queue = nodes
     }
 
-    return out
+    return out    
 }
