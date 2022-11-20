@@ -1,3 +1,5 @@
+// #tree #binary-tree
+
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -16,13 +18,16 @@ func walk(node *TreeNode, target int) bool {
         return node.Val == target
     }
 
-    if walk(node.Left, target-node.Val) || walk(node.Right, target-node.Val) {
-        return true
-    }
+    target -= node.Val
 
-    return false
+    return walk(node.Left, target) ||
+           walk(node.Right, target)
 }
 
 func hasPathSum(root *TreeNode, targetSum int) bool {
+    if root == nil {
+        return false
+    }
+
     return walk(root, targetSum)
 }
