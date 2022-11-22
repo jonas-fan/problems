@@ -1,3 +1,5 @@
+// #tree #binary-tree #binary-search-tree #depth-first-search
+
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -7,33 +9,21 @@
  * }
  */
 
-func dfs(node *TreeNode, out map[int]int) {
+func find(node *TreeNode, sum int, seen map[int]bool) bool {
     if node == nil {
-        return
+        return false
     }
 
-    out[node.Val]++
-
-    dfs(node.Left, out)
-    dfs(node.Right, out)
-}
-
-func findTarget(root *TreeNode, k int) bool {
-    seen := map[int]int{}
-
-    dfs(root, seen)
-
-    for num := range seen {
-        target := k - num
-
-        if count, ok := seen[target]; !ok {
-            continue
-        } else if num == target && count < 2 {
-            continue
-        }
-
+    if _, have := seen[sum-node.Val]; have {
         return true
     }
 
-    return false
+    seen[node.Val] = true
+
+    return find(node.Left, sum, seen) ||
+           find(node.Right, sum, seen)
+}
+
+func findTarget(root *TreeNode, k int) bool {
+    return find(root, k, map[int]bool{})
 }
