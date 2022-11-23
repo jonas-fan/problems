@@ -1,12 +1,4 @@
-func rob(nums []int) int {
-    length := len(nums)
-
-    if length == 1 {
-        return nums[0]
-    }
-
-    return max(max(sum(nums, 0, length-1)), max(sum(nums, 1, length)))
-}
+// #dynamic-programming
 
 func max(lhs int, rhs int) int {
     if lhs < rhs {
@@ -16,12 +8,28 @@ func max(lhs int, rhs int) int {
     return lhs
 }
 
-func sum(nums []int, index int, length int) (int, int) {
-    if index >= length {
-        return 0, 0
+func doRob(nums []int) int {
+    dp := make([]int, len(nums))
+
+    dp[0] = nums[0]
+    dp[1] = max(nums[0], nums[1])
+
+    for i := 2; i < len(nums); i++ {
+        dp[i] = max(dp[i-1], dp[i-2]+nums[i])
     }
 
-    robbed, safe := sum(nums, index+1, length)
+    return dp[len(dp)-1]
+}
 
-    return (nums[index] + safe), max(robbed, safe)
+func rob(nums []int) int {
+    if len(nums) == 0 {
+        return 0
+    } else if len(nums) == 1 {
+        return nums[0]
+    } else if len(nums) == 2 {
+        return max(nums[0], nums[1])
+    }
+
+    return max(doRob(nums[:len(nums)-1]),
+               doRob(nums[1:]))
 }
