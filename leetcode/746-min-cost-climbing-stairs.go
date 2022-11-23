@@ -9,15 +9,15 @@ func min(lhs int, rhs int) int {
 }
 
 func minCostClimbingStairs(cost []int) int {
-    top := len(cost)
-    dp := make([]int, top+1)
+    dp := make([]int, 0, len(cost)+1)
 
-    dp[0] = 0
-    dp[1] = 0
+    dp = append(dp, 0)
+    dp = append(dp, 0)
 
-    for i := 2; i < len(dp); i++ {
-        dp[i] = min(dp[i-1]+cost[i-1], dp[i-2]+cost[i-2])
+    for i := 2; i <= len(cost); i++ {
+        dp = append(dp, min(dp[i-1] + cost[i-1],
+                            dp[i-2] + cost[i-2]))
     }
 
-    return dp[top]
+    return dp[len(dp)-1]
 }
