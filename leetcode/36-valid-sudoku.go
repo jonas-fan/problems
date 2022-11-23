@@ -1,7 +1,7 @@
 // #array
 
 func validHorizontal(board [][]byte, row int, col int) bool {
-    seen := [9]int{}
+    seen := [9]bool{}
 
     for ; col < 9; col++ {
         num := board[row][col]
@@ -10,18 +10,18 @@ func validHorizontal(board [][]byte, row int, col int) bool {
             continue
         }
 
-        if seen[num-'1'] > 0 {
+        if seen[num-'1'] {
             return false
         }
 
-        seen[num-'1']++
+        seen[num-'1'] = true
     }
 
     return true
 }
 
 func validVertical(board [][]byte, row int, col int) bool {
-    seen := [9]int{}
+    seen := [9]bool{}
 
     for ; row < 9; row++ {
         num := board[row][col]
@@ -30,18 +30,18 @@ func validVertical(board [][]byte, row int, col int) bool {
             continue
         }
 
-        if seen[num-'1'] > 0 {
+        if seen[num-'1'] {
             return false
         }
 
-        seen[num-'1']++
+        seen[num-'1'] = true
     }
 
     return true
 }
 
 func validSquare(board [][]byte, row int, col int) bool {
-    seen := [9]int{}
+    seen := [9]bool{}
 
     for i := row; i < row + 3; i++ {
         for j := col; j < col + 3; j++ {
@@ -51,11 +51,11 @@ func validSquare(board [][]byte, row int, col int) bool {
                 continue
             }
 
-            if seen[num-'1'] > 0 {
+            if seen[num-'1'] {
                 return false
             }
 
-            seen[num-'1']++
+            seen[num-'1'] = true
         }
     }
 
