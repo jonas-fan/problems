@@ -15,14 +15,14 @@ func rob(nums []int) int {
         return nums[0]
     }
 
-    money := make([]int, 0, len(nums))
+    dp := make([]int, len(nums))
 
-    money = append(money, nums[0])
-    money = append(money, max(nums[0], nums[1]))
+    dp[0] = nums[0]
+    dp[1] = max(nums[0], nums[1])
 
     for i := 2; i < len(nums); i++ {
-        money = append(money, max(money[i-1], money[i-2]+nums[i]))
+        dp[i] = max(dp[i-1], dp[i-2]+nums[i])
     }
 
-    return money[len(nums)-1]
+    return dp[len(nums)-1]
 }
