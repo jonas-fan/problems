@@ -1,18 +1,21 @@
-// #depth-first-search
+// #backtracking #depth-first-search
 
 func dup(nums []int) []int {
     return append([]int{}, nums...)
 }
 
-func walk(num int, max int, nums int, set []int, out [][]int) [][]int {
-    if nums == 0 {
+func walk(begin int, end int, want int, set []int, out [][]int) [][]int {
+    if want == len(set) {
         return append(out, dup(set))
-    } else if num > max {
+    } else if begin > end {
         return out
     }
 
-    out = walk(num+1, max, nums-1, append(set, num), out)
-    out = walk(num+1, max, nums, set, out)
+    for i := begin; i <= end; i++ {
+        set = append(set, i)
+        out = walk(i+1, end, want, set, out)
+        set = set[:len(set)-1]
+    }
 
     return out
 }
